@@ -134,3 +134,9 @@ dmypy.json
 20210914_os_control/Lib/
 20210914_os_control/Scripts/
 20210914_os_control/pyvenv.cfg
+
+20210914_control_mysql/.idea/
+20210914_control_mysql/Include/
+20210914_control_mysql/Lib/
+20210914_control_mysql/Scripts/
+20210914_control_mysql/pyvenv.cfg
