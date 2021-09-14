@@ -1,0 +1,14 @@
+usefull commender python
+careate at, 20210914
+last, 20210914
+
+# create venv
+python3 -m venv folder_name
+
+# discharge pip
+pip freeze > file_name.txt
+
+# bring pip
+pip install -r file_name.txt
+
+
