@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# project env folder
+20210914_os_control/.idea/
+20210914_os_control/Include/
+20210914_os_control/Lib/
+20210914_os_control/Scripts/
