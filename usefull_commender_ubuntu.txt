@@ -1,0 +1,12 @@
+usefull commender ubuntu
+careate at, 20210914
+last, 20210914
+
+# add persistent environment variables
+~/.pam_environment
+EX=example
+
+~/.profile
+export EX=example
+
+
