@@ -141,3 +141,9 @@ dmypy.json
 20210914_control_mysql/Scripts/
 20210914_control_mysql/pyvenv.cfg
 
+20210914_control_azure_storage/.idea/
+20210914_control_azure_storage/Include/
+20210914_control_azure_storage/Lib/
+20210914_control_azure_storage/Scripts/
+20210914_control_azure_storage/pyvenv.cfg
+
