@@ -1,0 +1,11 @@
+usefull git commender
+careate at, 20210914
+last, 20210914
+
+# auto .gitignore
+https://www.gitignore.io/
+
+# del cashed
+git rm -r --cached .
+
+
