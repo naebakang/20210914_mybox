@@ -15,5 +15,6 @@ git remote set-url origin https://kibua20:1234@github.com/kibua20/PrivateTest.gi
 (ID: kibua20, Password or token:1234, Repository: PrivateTest)
 
 # auto login - gitlab
-git remote set-url origin http://kjw2031:1234@gitlab.jongdali.com/jdlab/20210716_laboratory_kdata.git
+Clon with HTTP: http://A
+git remote set-url origin http://(userid):(token)@A
 
