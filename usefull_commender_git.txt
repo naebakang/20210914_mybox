@@ -8,7 +8,7 @@ https://www.gitignore.io/
 # del cashed
 git rm -r --cached .
 
-# auto login - githun
+# auto login - github
 git clone https://kibua20:1234@github.com/kibua20/PrivateTest.git
 OR
 git remote set-url origin https://kibua20:1234@github.com/kibua20/PrivateTest.git
