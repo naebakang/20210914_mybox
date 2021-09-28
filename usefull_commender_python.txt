@@ -6,9 +6,8 @@ last, 20210914
 python3 -m venv folder_name
 
 # discharge pip
-pip freeze > requirments.txt
+pip freeze > requirements.txt
 
 # bring pip
-pip install -r requirments.txt
-
+pip install -r requirements.txt
 
