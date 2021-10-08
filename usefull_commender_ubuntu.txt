@@ -10,3 +10,10 @@ EX=example
 export EX=example
 
 
+# handle tar
+## press
+tar -cvf name.tar ./name_folder
+
+## unpress
+tar -xvf name.tar
+
