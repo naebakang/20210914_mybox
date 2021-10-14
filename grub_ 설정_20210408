@@ -1,0 +1,3 @@
+sudo gedit /etc/default/grub
+sudo gedit /boot/grub/grub.cfg
+sudo update-grub

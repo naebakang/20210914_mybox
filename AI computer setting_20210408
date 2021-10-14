@@ -1,0 +1,46 @@
+AI computer setting
+20210408
+
+ubuntu, Ubuntu 20.04.2 LTS
+
+python, 3.8.1
+
+pycharm, community-2021.1
+
+tensorflow, 2.4.0
+
+https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-2.4.0-cp38-cp38-manylinux2010_x86_64.whl
+
+cpu, Intel(R) Core(TM) i3-6100 CPU @ 3.70GHz
+gpu, GeForce RTX 2080 Ti
+
+nvidia-driver, 460.39
+
+CUDA Toolkit, 11.2.0
+
+PATH includes 
+echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> ~/.bash_profile
+
+LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.2/lib64' >> ~/.bash_profile
+
+echo 'export CUDADIR=/usr/local/cuda-11.2' >> ~/.bash_profile
+
+source ~/.bash_profile
+
+cuDNN SDK, v8.1.0, for CUDA 11.2
+sudo cp cuda/include/cudnn*.h /usr/local/cuda/include
+sudo cp -P cuda/lib64/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+sudo cp cuda/include/cudnn*.h /usr/local/cuda-11.2/include
+sudo cp -P cuda/lib64/libcudnn* /usr/local/cuda-11.2/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda-11.2/lib64/libcudnn*
+
+Compiler, GCC 7.3.1
+Build tools, Bazel 3.1.0
+
+export PATH=/usr/local/cuda-11.2/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH
+source ~/.profile
+
