@@ -2,8 +2,13 @@ usefull commender python
 careate at, 20210914
 last, 20210914
 
-# create venv
+# create venv - ubuntu
 python3 -m venv venv
+source venv/bin/activate
+
+# create venv - windows
+python -m venv venv
+venv/Scripts/activate.bat
 
 # activate venv
 source venv/bin/activate
