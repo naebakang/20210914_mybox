@@ -8,7 +8,7 @@ source venv/bin/activate
 
 # create venv - windows
 python -m venv venv
-venv/Scripts/activate.bat
+venv\Scripts\activate.bat
 
 # activate venv
 source venv/bin/activate
