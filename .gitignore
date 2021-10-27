@@ -147,3 +147,6 @@ dmypy.json
 20210914_control_azure_storage/Scripts/
 20210914_control_azure_storage/pyvenv.cfg
 
+# kjw
+.idea/
+
