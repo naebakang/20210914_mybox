@@ -1,6 +1,10 @@
 usefull commender git
 careate at, 20210914
-last, 20211012
+last, 20211031
+
+
+# init
+git init .
 
 
 
