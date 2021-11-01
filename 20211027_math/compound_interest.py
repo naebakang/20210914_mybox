@@ -11,4 +11,11 @@ def main(num_of_iter, principal, rate):
     main(num_of_iter, principal, rate)
 
 
-main(30*3, 2000000, 0.1)
+num_of_iter = 3
+principal = 2000000
+rate = 0.1
+main(num_of_iter, principal, rate)
+
+anw = principal*(1+rate)**num_of_iter
+
+anw2 = principal*(1+rate*num_of_iter + rate**(num_of_iter-1)*num_of_iter + rate**num_of_iter)
