@@ -11,8 +11,8 @@ def main(num_of_iter, principal, rate):
     main(num_of_iter, principal, rate)
 
 
-num_of_iter = 3
-principal = 2000000
+num_of_iter = 30*2
+principal = 20000000
 rate = 0.1
 main(num_of_iter, principal, rate)
 

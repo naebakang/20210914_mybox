@@ -10,9 +10,6 @@ source venv/bin/activate
 python -m venv venv
 venv\Scripts\activate.bat
 
-# activate venv
-source venv/bin/activate
-
 # discharge pip
 pip freeze > requirements.txt
 
