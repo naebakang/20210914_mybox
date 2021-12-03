@@ -13,10 +13,11 @@ to_addr = "pjbtkk@ajou.ac.kr"
 # store message data in email_data
 client = imaplib.IMAP4_SSL(imap_host)
 client.login(user, passwd)
-a, b = client.select('INBOX')
+# a, b = client.select(mailbox='INBOX', readonly=False)
+client.select()
 c, d = client.search(None, 'ALL')
 
-e = [b'380']
+e = [b'378']
 status, data = client.fetch(e[0], "(RFC822)")
 # str = unicode(str, errors='replace')
 email_data = data[0][1].decode('utf-8', 'ignore')
@@ -25,7 +26,7 @@ email_data = data[0][1].decode('utf-8', 'ignore')
 # create a Message instance from the email data
 message = email.message_from_string(email_data)
 
-f = [b'379']
+f = [b'377']
 status, data = client.fetch(f[0], "(RFC822)")
 mee = email.message_from_bytes(data[0][1])
 
@@ -41,6 +42,7 @@ message.replace_header("To", to_addr)
 smtp = smtplib.SMTP_SSL(smtp_host, smtp_port)
 # smtp.starttls()
 smtp.login(user, passwd)
-smtp.sendmail(from_addr, to_addr, message.as_string())
+abcd = message.as_string().encode('utf-8').strip()
+smtp.sendmail(from_addr, to_addr, abcd)
 smtp.sendmail(from_addr, to_addr, mee.as_string())
 smtp.quit()

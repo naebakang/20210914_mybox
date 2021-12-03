@@ -11,6 +11,8 @@ import smtplib
 import imaplib
 import email
 from email.header import decode_header, make_header
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 imap_host = "imap.gmail.com"
 smtp_host = "smtp.gmail.com"
@@ -26,15 +28,29 @@ to_addr = "pjbtkk@ajou.ac.kr"
 client = imaplib.IMAP4_SSL('imap.gmail.com')
 client.login(user, passwd)
 a,b = client.select()
+b = [b'380']
 c, d = client.fetch(b[0], 'RFC822')
 mee = email.message_from_bytes(d[0][1])
 
+email_data = d[0][1].decode('utf-8', 'ignore')
+# create a Message instance from the email data
+message = email.message_from_string(email_data)
+
 subject = make_header(decode_header(mee.get('Subject')))
+to = make_header(decode_header(mee.get('To')))
 fromm = make_header(decode_header(mee.get('FROM')))
+date = make_header(decode_header(mee.get('Date')))
+text = 'aa'
+
+msg = MIMEMultipart()
+msg.attach(message)
+msg.attach(MIMEText(text))
 smtp = smtplib.SMTP_SSL(smtp_host, smtp_port)
 # smtp.starttls()
+
+msg_ende = msg.as_string().encode('utf-8').strip()
 smtp.login(user, passwd)
-smtp.sendmail(from_addr, to_addr, mee.as_string())
+smtp.sendmail(from_addr, to_addr, msg_ende)
 # smtp.send_message(mee)
 smtp.quit()
 
