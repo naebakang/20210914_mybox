@@ -10,6 +10,7 @@ docker pull [image name]
 # run
 docker run [image name]
 docker run --name [image name]
+docker run --network [network name]
 
 # monitor
 docker images
@@ -51,9 +52,14 @@ docker build -t [new image name ] [REPOSITORY:TAG]  <-- need 'docker file'
 # up load image
 docker push [USER NAME/REPOSITORY:TAG]
 
+# network
+docker network create [network name]
+
 # dockerfile
 RUN
 WORKDIR
 ENV
 EXPOSE
 CMD
+
+# docker-compose
