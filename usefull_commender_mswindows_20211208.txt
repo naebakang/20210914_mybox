@@ -1,0 +1,9 @@
+usefull commender mswindows
+careate at, 20211208
+last at, 20211208
+
+# delete onedrive file
+sfc scannow
+dism /online /cleanup-image /CheckHealth
+dism /online / leanup-image /restorehealth
+chkdsk /f /r /b
