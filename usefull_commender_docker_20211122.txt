@@ -1,8 +1,10 @@
 usefull commender docker
 careate at, 20211122
-last, 20211122
+last at, 20211208
 
 
+
+# 도커 폴더 위치를 Ddrive로 변경 할 것, 이미지 용량이 계속해서 쌓이게 되기 때문.
 
 # pull
 docker pull [image name]
@@ -11,6 +13,8 @@ docker pull [image name]
 docker run [image name]
 docker run --name [image name]
 docker run --network [network name]
+docker run -p 80:80 [image name]  # port forwarding
+docker run -p 8080:80 -v ~/Desktop/htdocs:/usr/local/apache2/htdocs/ [REPOSITORY]  # connect local to container
 
 # monitor
 docker images
@@ -30,9 +34,6 @@ docker rm [container name]
 docker rm --force [container name]
 docker rmi [image name]
 
-# port forwarding
-docker run -p 80:80 [image name]
-
 # into container
 docker exec [container name] pwd
 docker exec -it [container name] /bin/bash
@@ -42,20 +43,22 @@ docker attach [CONTAINER ID]
 # out container
 exit
 
-# connect local to container
-docker run -p 8080:80 -v ~/Desktop/htdocs:/usr/local/apache2/htdocs/ httpd
-
 # create new image
 docker commit [container name] [REPOSITORY:TAG]
-docker build -t [new image name ] [REPOSITORY:TAG]  <-- need 'docker file'
+docker build -t [new image name:tag] [PATH_dockerfile]  <-- need 'docker file'
 
-# up load image
+# upload image
 docker push [USER NAME/REPOSITORY:TAG]
+
+# backup_local
+docker save -o [save name].tar [image name:tag]
+docker load [save name].tar
 
 # network
 docker network create [network name]
 
 # dockerfile
+FROM
 RUN
 WORKDIR
 ENV
