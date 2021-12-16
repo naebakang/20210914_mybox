@@ -1,0 +1,37 @@
+setting appache http server with python
+careate at, 20211122
+last at, 20211210
+editor, Jiwoong Kang
+
+
+1. apt-get update
+2. apt-get install apache2
+3. cd /etc/apache2
+4. vim apache2.conf
+5. -- INSERT -- ServerName localhost
+6. cd /etc/apache2/sites-enabled
+7. vim 000-default.conf
+8. -- INSERT --
+DocumentRoot /var/www/html 아래쪽에 다음을 입력할 것.
+<Directory /var/www/html>  # apache working diretory
+                AddHandler cgi-script .py
+                Options ExecCGI
+</Directory>
+
+9. sudo a2enmod cgi
+
+10. sudo service apache2 restart
+
+11. type python3
+결과 주소 복사
+12. vim hello.py
+파이썬 파일 맨 윗줄에
+#!<결과 주소>
+2번째 줄에
+print('content-type: text/html; charset=UTF-8')
+
+13. chmod 755 hello.py
+
+
+* error 실시간 확인법
+tail -f /var/log/apache2/error.log

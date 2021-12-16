@@ -15,6 +15,7 @@ docker run --name [image name]
 docker run --network [network name]
 docker run -p 80:80 [image name]  # port forwarding
 docker run -p 8080:80 -v ~/Desktop/htdocs:/usr/local/apache2/htdocs/ [REPOSITORY]  # connect local to container
+docker run -it --name [container name] -p [host port:container port] [image name]
 
 # monitor
 docker images
