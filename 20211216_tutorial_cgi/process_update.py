@@ -3,11 +3,16 @@
 
 import cgi
 import os
+import html_sanitizer
 
 form = cgi.FieldStorage()
 title = form['title'].value
 title_new = form['title_new'].value
 description = form['description'].value
+
+sanitizer = html_sanitizer.Sanitizer()
+title_new = sanitizer.sanitize(title_new)
+description = sanitizer.sanitize(description)
 
 os.rename('data/{}'.format(title), 'data/{}'.format(title_new))
 
