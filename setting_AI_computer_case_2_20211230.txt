@@ -1,0 +1,31 @@
+setting_AI_computer_case_2
+careate at, 20211230
+last, 20211230
+editor, naebakang
+
+
+
+CPU
+AMD Ryzen 5 1600 Six-Core Processor 3.20 GHz
+
+GPU
+GeForce RTX 2070 SUPER
+Memory-Usage, 8192MB
+
+OS
+Windows 10 Pro, 64-bit
+
+NVIDIA STUDIO Driver
+461.72
+
+CUDA(R) Toolkt
+11.0, V11.0.194
+
+cuDNN SDK
+8.0.4
+
+Python
+3.8.5
+
+TensorFlow
+2.4.0
