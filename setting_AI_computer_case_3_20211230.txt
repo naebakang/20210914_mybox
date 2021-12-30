@@ -1,23 +1,36 @@
-AI computer setting
-20210408
+setting_AI_computer_case_3
+careate at, 20211230
+last, 20211230
+editor, naebakang
 
-ubuntu, Ubuntu 20.04.2 LTS
 
-python, 3.8.1
 
-pycharm, community-2021.1
+CPU
+Intel(R) Core(TM) i3-6100 CPU @ 3.70GHz
 
-tensorflow, 2.4.0
+GPU
+GeForce RTX 2080 Ti
+Memory-Usage, 11018MB
 
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-2.4.0-cp38-cp38-manylinux2010_x86_64.whl
+OS
+Ubuntu 20.04.3 LTS, 64-bit
 
-cpu, Intel(R) Core(TM) i3-6100 CPU @ 3.70GHz
-gpu, GeForce RTX 2080 Ti
+NVIDIA Driver
+460.91.03
 
-nvidia-driver, 460.39
+CUDA(R) Toolkt
+11.2
 
-CUDA Toolkit, 11.2.0
+cuDNN SDK
+8.1.0
 
+Python
+3.8.10
+
+TensorFlow
+2.4.0
+
+command
 PATH includes 
 echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> ~/.bash_profile
 
