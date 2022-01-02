@@ -1,0 +1,23 @@
+non interaction
+careate at, 20220102
+last at, 20220102
+editor, Jiwoong Kang
+
+
+
+20220102
+'apt-get install' 명령을 통해 패키지를 설치하는 경우,
+패키지에 따라 상호작용이 필요하다.
+
+예를들어 'apt-get install apache2' 명령어를 입력하면,
+'Do you want to continue? [Y/N] 과 같은 질문에 y 혹은 n 으로 상호작용
+해야한다.
+
+이런 상호작용을 자동으로 할 수 있는 방법을 찾아봤다.
+'DEBIAN_FRONTEND=noninteractive' 명령어를 치면 상호작용 없이
+디폴트 값으로 설치가 된다.
+
+원하는 값을 지정해서 자동으로 하는 방법은 아직 찾지 못 했다.
+방법을 찾는 것은 상당히 어려울 것으로 예상된다. 내가 프로그램을 만들어서
+해결 하는 것이 보다 빠르게 해결하는 길인 것 같다.
+
