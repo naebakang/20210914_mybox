@@ -30,6 +30,9 @@ Python
 TensorFlow
 2.4.0
 
+CMake
+3.16.3
+
 command
 PATH includes 
 echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> ~/.bash_profile
