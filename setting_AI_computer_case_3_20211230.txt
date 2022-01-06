@@ -36,11 +36,11 @@ CMake
 OpenCV
 4.5.1
 
-command
-PATH includes 
+# command
+# PATH includes 
 echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> ~/.bash_profile
 
-LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
+# LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.2/lib64' >> ~/.bash_profile
 
 echo 'export CUDADIR=/usr/local/cuda-11.2' >> ~/.bash_profile
