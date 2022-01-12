@@ -151,4 +151,9 @@ dmypy.json
 .idea/
 *.pyc
 htmlcov/
+20220105_tutorial_tensorflow/training_1/
+20220105_tutorial_tensorflow/training_2/
+20220105_tutorial_tensorflow/checkpoints/
+20220105_tutorial_tensorflow/saved_model/
+*.h5
 
