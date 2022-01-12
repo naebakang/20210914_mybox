@@ -149,4 +149,6 @@ dmypy.json
 
 # kjw
 .idea/
+*.pyc
+htmlcov/
 
