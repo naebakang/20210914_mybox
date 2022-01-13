@@ -1,60 +1,44 @@
 # File encoding: utf8
 
-import pymysql
-
+import sqlite3
 import click
-from flask import current_app
-from flask import g
+from flask import current_app, g
 from flask.cli import with_appcontext
 
 
-def get_db(passwd):
+def get_db():
     if 'db' not in g:
-        db_mariadb = pymysql.connect(
-            user='root',
-            passwd=passwd,
-            host='172.0.0.1',
-            port='3306',
-            db='flaskr',
-            charset='UTF8'
+        g.db = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
         )
-        g.db = db_mariadb.cursor(pymysql.cursors.DictCursor)
+        g.db.row_factory = sqlite3.Row
 
     return g.db
 
 
-def close_db(passwd):
-    db_mariadb = pymysql.connect(
-        user='root',
-        passwd=passwd,
-        host='127.0.0.1',
-        port=3306,
-        db='flaskr',
-        charset='UTF8'
-    )
-    db_mariadb.close()
+def close_db(e=None):
+    db = g.pop('db', None)
+
+    if db is not None:
+        db.close()
 
 
-def init_db(passwd):
-    db = get_db(passwd)
+def init_db():
+    db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
-        db.execute(f.read().decode('utf8'))
+        db.executescript(f.read().decode('utf8'))
 
 
-@click.command("init-db")
-@click.option('--passwd')
+@click.command('init-db')
 @with_appcontext
-def init_db_command(passwd):
-    """Clear existing data and create new tables."""
-    # init_db(passwd)
-    click.echo("Initialized the database.")
+def init_db_command():
+    """Clear the existing data and create new tables."""
+    init_db()
+    click.echo('Initialized the database.')
 
 
-def init_app(app, passwd):
-    app.teardown_appcontext(close_db(passwd))
+def init_app(app):
+    app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-
-
-if __name__ == '__main__':
-    print(1234)
