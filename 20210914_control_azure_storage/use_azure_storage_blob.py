@@ -1,4 +1,4 @@
-# File encoding: UTF-8
+# File encoding: utf8
 
 import os
 from azure.storage.blob import BlobServiceClient
@@ -9,6 +9,8 @@ class BotAzureStorage:
         # https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python
         # Windows - cmd
         # setx AZURE_STORAGE_CONNECTION_STRING "<yourconnectionstring>"
+        # Linux - bash
+        # export AZURE_STORAGE_CONNECTION_STRING="<yourconnectionstring>"
         self.connection_str = os.environ['AZURE_STORAGE_CONNECTION_STRING']
 
         self.container = container
