@@ -5,6 +5,7 @@ last, 20210914
 # create venv - ubuntu
 python3 -m venv venv
 source venv/bin/activate
+deactivate
 
 # create venv - windows
 python -m venv venv
