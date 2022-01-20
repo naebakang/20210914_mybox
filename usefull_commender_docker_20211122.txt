@@ -71,3 +71,5 @@ CMD
 doocker-compose up  # 컨테이너가 생성된다.
 docker-compose build  # image:, build: 둘다 입력하는 경우 build 파일로 부터 image: 에 적혀여 있는 이름과 테그로 이미지가 생성된다.
 
+docker-compose push  # 이미지가 클라우드 storage에 저장된다.
+
