@@ -8,7 +8,7 @@ def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY='dev',
+        SECRET_KEY='e2fc5d07916ad9b398a0d5384aa7548aba02083d6e94376c51ec0bd1151b243a',
         DATABASE=os.path.join(app.instance_path, 'flaskr.mariadb'),
     )
 

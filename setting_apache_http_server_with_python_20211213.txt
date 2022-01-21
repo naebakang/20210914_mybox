@@ -1,7 +1,7 @@
 setting appache http server with python
 careate at, 20211122
 last at, 20211210
-editor, Jiwoong Kang
+editor, naebakang
 
 
 1. apt-get update
