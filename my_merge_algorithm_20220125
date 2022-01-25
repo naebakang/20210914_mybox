@@ -1,0 +1,27 @@
+create at, 20220125
+last, 20220125
+editor, naebakang
+
+
+
+3가지 branch를 만든다.
+1. master, 2. dev, 3. release
+
+checkout dev
+개발 진행, 잘 돌아가는걸 확인한다.
+
+checkout release
+merge dev
+필요 없는 파일 삭제, 서비스 할 모든 수정을 마친다, 잘 돌아가는걸 확인한다.
+
+checkout master
+merge --no-ff release
+tag v000
+
+checkout dev
+merge master
+release 과정에서 발견된 버그 들만 받아 들이고, 삭제 된 파일들, 서비스만을 위한 코드 들은 받아 들이지 않는다.
+개발 진행, 잘 돌아가는거 확인한다.
+
+반복.
+
