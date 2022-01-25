@@ -38,3 +38,6 @@ git diff
 
 # log
 git log --all --graph --oneline
+
+# head 이동
+git checkout <branch name>
