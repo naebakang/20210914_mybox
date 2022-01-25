@@ -36,4 +36,5 @@ git checkout
 git log
 git diff
 
-
+# log
+git log --all --graph --oneline
