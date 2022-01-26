@@ -41,3 +41,9 @@ git log --all --graph --oneline
 
 # head 이동
 git checkout <branch name>
+
+# 병합
+git merge --no-ff <branch name>
+
+# 버전 관리
+git tag <content>
