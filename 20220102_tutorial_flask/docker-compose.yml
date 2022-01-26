@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   app:
-    image: flaskr:v113
+    image: flaskr:release
     build: .
     ports:
       - "8085:80"
