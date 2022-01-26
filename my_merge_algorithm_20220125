@@ -4,24 +4,24 @@ editor, naebakang
 
 
 
+단순하게 간다.
+개발 단계 코드와 출시 단계 코드가 완전 다르다고 가정한다.
+
+
 3가지 branch를 만든다.
 1. master, 2. dev, 3. release
 
-checkout dev
+checkout master
 개발 진행, 잘 돌아가는걸 확인한다.
 
-checkout release
-merge dev
+checkout dev
+merge --no-ff master
 필요 없는 파일 삭제, 서비스 할 모든 수정을 마친다, 잘 돌아가는걸 확인한다.
 
-checkout master
-merge --no-ff release
+checkout release
+merge --no-ff dev
 tag v000
+출시
 
-checkout dev
-merge master
-release 과정에서 발견된 버그 들만 받아 들이고, 삭제 된 파일들, 서비스만을 위한 코드 들은 받아 들이지 않는다.
-개발 진행, 잘 돌아가는거 확인한다.
-
+checkout master
 반복.
-
