@@ -1,4 +1,0 @@
-sudo sh -c "echo 'exportPATH=$PATH:/usr/local/cuda-11.2/bin'>> /etc/profile"
-sudo sh =c "echo 'exportLD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.2/lib64'>> /etc/profile"
-sudo sh -c "echo 'exportCUDADIR=/usr/local/cuda-11.2'>> /etc/profile"
-source /etc/profile
