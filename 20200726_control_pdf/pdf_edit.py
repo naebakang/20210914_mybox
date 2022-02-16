@@ -3,8 +3,8 @@
 import os
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-file_name ='결혼식 축하 공연_v1_0_7.pdf'
-pdf = PdfFileReader(open(file_name, 'rb'))
+file_name ='/home/kangdaepyo/Desktop/a.pdf'
+pdf= PdfFileReader(open(file_name, 'rb'))
 
 
 def create_new_pdf(total_page, new_name):
