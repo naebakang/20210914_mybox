@@ -1,4 +1,6 @@
 # File encoding: UTF-8
+
+
 def main(num_of_iter, principal, rate):
     if num_of_iter == 0:
         return
