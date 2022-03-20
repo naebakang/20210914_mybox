@@ -1,7 +1,7 @@
 # File encoding: utf8
 
 """
-<any scripts>
+20220320_v001, 최초생성
 """
 
 from component.once import Sprinter
@@ -14,17 +14,11 @@ class App:
         self.ins_cyclist = Cyclist()
 
     def run(self):
-        print('-----Start-----')
+        print('-----Start App-----')
         self.ins_sprinter.run()
         while 1:
-                print('')
-            # try:
-                self.ins_cyclist.run()
-
-            # except:
-            #     self.ins_gmail.run_send_email(subject='error', contents=contents)
-            #
-            #     time.sleep(60 * 5)
+            print('')
+            self.ins_cyclist.run()
 
 
 if __name__ == '__main__':

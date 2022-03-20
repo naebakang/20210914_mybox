@@ -16,11 +16,6 @@ import datetime
 """
 작성규칙
 내가 만든 모듈은 import 하지 않는다.
-
-# symbol = 'ETHUSDT'
-# df['open_time'] = pandas.to_datetime(df['open_time'], unit='ms')
-# df.set_index('open_time', inplace=True)
-# print(df)
 """
 
 # class MSWindow:
