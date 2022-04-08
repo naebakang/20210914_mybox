@@ -1,0 +1,3 @@
+# AP and precision/recall per class
+
+# mAP of all classes

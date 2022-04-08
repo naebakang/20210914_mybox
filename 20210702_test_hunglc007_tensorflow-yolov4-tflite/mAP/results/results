@@ -1,0 +1,13 @@
+
+# Number of predicted objects per class
+bandTapeRibbon: 14 (tp:4, fp:10)
+button: 107 (tp:93, fp:14)
+fabric: 6 (tp:2, fp:4)
+hotfix: 4 (tp:2, fp:2)
+label: 19 (tp:2, fp:17)
+lace: 8 (tp:1, fp:7)
+metalPlastic: 1 (tp:0, fp:1)
+string: 4 (tp:0, fp:4)
+thread: 12 (tp:3, fp:9)
+wafenPaper: 20 (tp:17, fp:3)
+zipper: 40 (tp:8, fp:32)
