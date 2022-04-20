@@ -1,0 +1,15 @@
+# cmd
+ln -s /home/kjw2031/pycharm-community-2021.3.3/bin/pycharm.sh /usr/bin
+
+
+# cmd
+vim /usr/share/applications/pycharm.desktop
+
+[Desktop Entry]
+Name=Pycharm
+Comment=Pychar Integrated Development Envrionment
+Exec=pycharm.sh
+Icon=/home/kjw2031/pycharm-community-2021.3.3/bin/pycharm.png
+Terminal=false
+Type=Application
+Categories=Development;pycharm;python;
