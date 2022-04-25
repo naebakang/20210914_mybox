@@ -27,6 +27,9 @@ git remote set-url origin https://kibua20:1234@github.com/kibua20/PrivateTest.gi
 Clon with HTTP: http://A
 git remote set-url origin http://(userid):(token)@A
 
+git config --global credential.helper store
+# 이후 로그인
+
 
 # 원격 저장소 주소 변경
 git remote -v
