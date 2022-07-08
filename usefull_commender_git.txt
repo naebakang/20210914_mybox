@@ -31,6 +31,7 @@ git config --global user.name <id>
 git config --global user.password <token>
 git config --global credential.helper store
 # 이후 로그인
+test
 
 
 # 원격 저장소 주소 변경
