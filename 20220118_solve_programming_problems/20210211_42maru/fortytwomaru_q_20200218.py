@@ -81,6 +81,21 @@ for i in range(21):
 print(answer)
 print('step3 = %s' % step3)
 
+# 20220711, 이승현 매니저 아이디어
+list_total = [a, b, c]
+dic_total = {}
+step4 = 0
+anw4 = []
+for i in list_total:
+    for ii in i:
+        if str(ii) in dic_total:
+            dic_total[str(ii)] += 1
+        else:
+            dic_total[str(ii)] = 0
 
+        if dic_total[str(ii)] == 2:
+            anw4.append(ii)
+        step4 += 1
 
-
+print(anw4)
+print("step4: {}".format(step4))
