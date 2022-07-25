@@ -68,7 +68,7 @@ EXPOSE
 CMD
 
 # docker-compose
-doocker-compose up  # 컨테이너가 생성된다, 이 경우 docker-compose.yml 파일 1개당 1개의 container만 생성가능하다.
+docker-compose up  # 컨테이너가 생성된다, 이 경우 docker-compose.yml 파일 1개당 1개의 container만 생성가능하다.
 
 docker-compose build  # image:, build: 둘다 입력하는 경우 build 파일로 부터 image: 에 적혀여 있는 이름과 테그로 이미지가 생성된다.
 
