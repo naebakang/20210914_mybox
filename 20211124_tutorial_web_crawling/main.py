@@ -122,3 +122,30 @@ print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
 
 path_or_buf = dir_project + '/' + 'musinsa_20211124' + '.csv'
 df.to_csv(path_or_buf=path_or_buf, index=True, encoding='UTF-8')
+
+a=i.find('a', attrs={'class':'img-block'})
+print(a)
+
+import pandas
+
+# df = pandas.read_csv()
+
+
+price_after = df['price_after']
+price_after_int = []
+for i in price_after:
+  price_after_int.append(int(i.replace(',','').replace('원','')))
+
+import matplotlib.pyplot as plt
+
+plt.figure()
+plt.hist(price_after_int, bins=90)
+
+
+plt.xlim(10000, 1000000)
+plt.xscale('linear')
+plt.xlabel('price')
+plt.ylabel('count')
+
+plt.savefig(dir_project + '/figure.png')
+plt.show()
