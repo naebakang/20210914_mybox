@@ -1,0 +1,5 @@
+﻿index,multiple,infinite,type,ex.
+1,F,F,main_select,lab_button_design
+2,F,T,main_write,lab_button_made_in
+3,T,F,sub_many_colume_check,lab_button_color
+4,T,T,sub_one_colume_write,lab_button_size
