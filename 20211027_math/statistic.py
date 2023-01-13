@@ -49,6 +49,8 @@ class Statistician:
 
         statistics_class, class_value, relative_frequency = self.get_class_and_relative_frequency(data)
 
+        class_width = statistics_class[1] - statistics_class[0]
+
         # x, y
         x = numpy.zeros(len(relative_frequency) + 2, dtype=float)
         y = numpy.zeros(len(relative_frequency) + 2, dtype=float)
@@ -58,7 +60,7 @@ class Statistician:
         y[-1] = 0
         for ii in range(len(relative_frequency)):
             x[ii + 1] = class_value[ii]
-            y[ii + 1] = relative_frequency[ii]
+            y[ii + 1] = relative_frequency[ii]/class_width
 
         return x, y
 
