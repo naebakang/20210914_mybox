@@ -54,7 +54,7 @@ docker push [USER NAME/REPOSITORY:TAG]
 
 # backup_local
 docker save -o [save name].tar [image name:tag]
-docker load [save name].tar
+docker load -i [save name].tar
 
 # network
 docker network create [network name]
