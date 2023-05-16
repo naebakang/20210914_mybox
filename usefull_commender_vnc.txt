@@ -1,0 +1,19 @@
+usefull commender vnc
+careate at, 20230516
+last, 20230516
+
+# start
+vncserver
+vncserver -localhost no -geometry 800x600 -depth 24
+
+# kill
+vncserver -kill :*
+
+# change configure
+sudo vim ~/.vnc/xstartup
+sudo chmod +x ~/.vnc/xstartup
+
+# list
+vncserver -list
+
+

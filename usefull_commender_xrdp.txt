@@ -1,0 +1,10 @@
+usefull commender xrdp
+careate at, 20230516
+last, 20230516
+
+
+# change configure
+sudo vim /etc/xrdp/startwm.sh
+sudo vim /etc/xrdp/xrdp.ini
+
+
