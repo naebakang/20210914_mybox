@@ -431,10 +431,13 @@ class Memory:
         now_time = datetime.datetime.now().strftime('%Y%m%d%H%M')
         file_name = '{}_{}'.format(file_name, now_time)
         path_or_buf = os.path.join(directory, file_name + ".csv")
-        df.to_csv(path_or_buf=path_or_buf,
-                  float_format='0.8f',
-                  index=True,
-                  index_label='index')
+        df.to_csv(
+            path_or_buf=path_or_buf,
+            float_format='0.8f',
+            index=True,
+            index_label='index',
+            encoding="utf-8-sig"
+        )
 
     def get_cumulate_recent_saved_data(self, len_now_time, directory, file_group_name, extension=None):
         saved_data = None
