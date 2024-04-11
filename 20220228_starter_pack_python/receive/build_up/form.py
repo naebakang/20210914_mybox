@@ -4,7 +4,7 @@
 Description
 """
 
-from components.functional.base import Memory, ETC
+from components.function.base import Memory, ETC
 
 from components.env import Name, PathDirectory, PathFile, IndexKJW, HaveUnit
 

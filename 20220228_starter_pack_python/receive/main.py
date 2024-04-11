@@ -4,8 +4,8 @@
 20220320_v001, 최초생성
 """
 
-from component.once import Sprinter
-from component.cycle import Cyclist
+from components.procedure.once import Sprinter
+from components.procedure.cycle import Cyclist
 
 
 class App:
@@ -22,5 +22,13 @@ class App:
 
 
 if __name__ == '__main__':
+    import sys
+    import os
+
+    working_dir = ""
+    sys.path.append(working_dir)
+    os.chdir(working_dir)
+    print(os.getcwd())
+    
     ins = App()
     ins.run()

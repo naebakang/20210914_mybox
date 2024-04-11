@@ -18,14 +18,6 @@ import ast
 작성규칙
 내가 만든 모듈은 import 하지 않는다.
 
-# symbol = 'ETHUSDT'
-# df['open_time'] = pandas.to_datetime(df['open_time'], unit='ms')
-# df.set_index('open_time', inplace=True)
-# print(df)
-
-20220531
-list 문자열 "[1, 2, 3]"을 list 자체로 가져오기 ast.literal_eval("[1, 2, 3]") --> [1, 2, 3]
-
 20220730
 globals 사용하면 변수명 만들수 있다.
 """
@@ -254,7 +246,7 @@ class FileSystem:
 
         return anw
 
-    @staticmethod  # 이거 부터 만들자
+    @staticmethod  # 이거 부터 만들자, 20240411 ?
     def get_recent_file_name_not_df0(n, directory, file_group_name, len_now_time, extension=None):
         # parameter
         directory = str(directory)
@@ -330,36 +322,72 @@ class FileSystem:
             return self.get_dir_size(path)
 
 
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, numpy.integer):
+            return int(obj)
+        if isinstance(obj, numpy.floating):
+            return float(obj)
+        if isinstance(obj, numpy.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
+
+
 class Memory:
     def __init__(self):
         self.ins_filesystem = FileSystem()
 
-    def create_cover_json(self, directory, file_name, dic):
+    def create_cover_json(self, path_file, dic):
         dic_str = {}
         for key, value in dic.items():
             dic_str[key] = str(value)
-        path_file = os.path.join(directory, file_name + ".json")
         with open(path_file, 'w') as f:
-            json.dump(dic_str, f)
+            json.dump(dic_str, f, cls=NpEncoder)
 
-    def create_cover_feather(self, directory, file_name, df):
-        pandas.options.display.float_format = '{:.4f}'.format
+    def create_cover_feather(self, path_file, df):
         df = df.reset_index(drop=True)  # "index" 가 0 부터 1씩 아래로 늘어나도록 수정
         if len(df) == 0:
             df['0'] = numpy.nan
 
+        pandas.options.display.float_format = '{:.4f}'.format
         df = df.astype(str)
 
-        path_file = os.path.join(directory, file_name + ".ftr")
         df.to_feather(path=path_file)
 
-    def get_cover_saved_data(self, directory, file_name, extension=None):
+    def create_cover_csv(self, path_file, df):
+        basename = os.path.basename(path_file)
+        name_file, extension = os.path.splitext(basename)
+
+        if extension == ".csv":
+            df = df.reset_index(drop=True)  # "index" 가 0 부터 1씩 아래로 늘어나도록 수정
+            if len(df) == 0:
+                df['0'] = numpy.nan
+
+            pandas.options.display.float_format = '{:.4f}'.format
+            df = df.astype(str)
+
+            df.to_csv(
+                path_or_buf=path_file,
+                header=True,
+                index=True,
+                index_label="index",
+                encoding="utf-8-sig",
+            )
+        else:
+            raise ValueError("-----No extension-----")
+
+    def create_cover_npy(self, path_file, array):
+        numpy.save(path_file, array)
+
+    def get_cover_saved_data(self, path_file, sheet_name=None):
         saved_data = None
+
+        basename = os.path.basename(path_file)
+        file_name, extension = os.path.splitext(basename)
         if extension == None:
             pass
 
-        elif extension == 'json':
-            path_file = os.path.join(directory, file_name + ".json")
+        elif extension == '.json':
             with open(path_file, 'r') as f:
                 saved_data = json.load(f)
 
@@ -370,30 +398,13 @@ class Memory:
                     if value[0] == "{" or value[0] == "[" or value[0] == "(":
                         saved_data[key] = ast.literal_eval(value)
 
-        elif extension == 'ftr':
-            path_file = os.path.join(directory, file_name + ".ftr")
+        elif extension == '.ftr':
             time.sleep(0.2)
             saved_data = pandas.read_feather(path=path_file, columns=None, use_threads=True, storage_options=None)
 
-        elif extension == 'csv':
-            file = file_name + ".csv"
-            filepath_or_buffer = os.path.join(directory, file)
-            saved_data = pandas.read_csv(filepath_or_buffer=filepath_or_buffer,
-                                         header=0,
-                                         index_col='index',
-                                         dtype={
-                                             'minprice': str,
-                                             'minqty': str,
-                                             'minnotional': str
-                                         },
-                                         na_values='NaN',
-                                         thousands=',')
-
-        elif extension == 'xlsx':
-            file = file_name + ".xlsx"
-            io = os.path.join(directory, file)
-            saved_data = pandas.read_excel(
-                io,
+        elif extension == '.csv':
+            saved_data = pandas.read_csv(
+                filepath_or_buffer=path_file,
                 header=0,
                 index_col='index',
                 dtype={
@@ -402,8 +413,27 @@ class Memory:
                     'minnotional': str
                 },
                 na_values='NaN',
+                thousands=','
+            )
+
+        elif extension == '.xlsx':
+            io = path_file
+            saved_data = pandas.read_excel(
+                io,
+                sheet_name=sheet_name,
+                header=0,
+                # index_col='index',
+                # dtype={
+                #     'minprice': str,
+                #     'minqty': str,
+                #     'minnotional': str
+                # },
+                # na_values='NaN',
                 thousands=',',
             )
+
+        elif extension == '.npy':
+            saved_data = numpy.load(path_file)
 
         return saved_data
 
@@ -436,7 +466,7 @@ class Memory:
             float_format='0.8f',
             index=True,
             index_label='index',
-            encoding="utf-8-sig"
+            encoding="utf-8-sig",
         )
 
     def get_cumulate_recent_saved_data(self, len_now_time, directory, file_group_name, extension=None):
@@ -446,8 +476,8 @@ class Memory:
                                                              file_group_name=file_group_name,
                                                              len_now_time=len_now_time,
                                                              extension=extension)
-        filepath_or_buffer = os.path.join(directory, file_name + "." + extension)
-        if extension == 'csv':
+        filepath_or_buffer = os.path.join(directory, file_name + extension)
+        if extension == '.csv':
             saved_data = pandas.read_csv(filepath_or_buffer=filepath_or_buffer,
                                          header=0,
                                          index_col='index',
@@ -458,10 +488,59 @@ class Memory:
                                          },
                                          na_values='NaN',
                                          thousands=',')
-        elif extension == 'ftr':
-            saved_data = pandas.read_feather(path=filepath_or_buffer, columns=None, use_threads=True, storage_options=None)
+
+        elif extension == '.ftr':
+            saved_data = pandas.read_feather(
+                path=filepath_or_buffer, columns=None, use_threads=True, storage_options=None
+            )
 
         return saved_data
+
+
+class TimeKJW:
+    def __init__(self):
+        pass
+        # etc.
+        # tt = time.time()
+        # tm = datetime.datetime.fromtimestamp(tt)
+        # time_min = datetime.datetime.now().minute
+
+    @staticmethod
+    def contorol():
+        tm = 1234567890
+        tm = datetime.datetime.fromtimestamp(tm)
+        t2 = tm.replace(minute=00)
+        t2 = int(time.mktime(t2.timetuple()))
+
+        tm = time.localtime(tm)
+        time_minute = tm.tm_min
+
+    @staticmethod
+    def get_str_date_from_timestemp_sec(timestemp_sec):
+        timestemp_sec = float(timestemp_sec)
+
+        str_date = ""
+
+        date = datetime.datetime.fromtimestamp(timestemp_sec)
+        str_date = date.strftime('%Y-%m-%d %H:%M:%S')
+
+        # DT_stamp = time.time()
+        # DT = datetime.datetime.fromtimestamp(DT_stamp)
+        # CRT_YMD = DT.strftime("%Y%m%d%H%M%S")
+        # FRM_DT = DT.strftime('%H:%M:%S')
+
+        return str_date
+
+    @staticmethod
+    def get_timestamp_to_datetime_date(timestamp):
+        """
+        :param timestamp:
+        :return: [datetime.date]
+        """
+
+        datetime_date = timestamp.date()
+
+        return datetime_date
 
 
 class ETC:
@@ -474,10 +553,12 @@ class ETC:
         """
         # excel file 읽기
         extension = 'xlsx'
-        file_name = self.ins_filesystem.get_recent_file_name(directory='oasis_dir',
-                                                           file_group_name='interest_stock_',
-                                                           len_now_time=12,
-                                                         extension=extension)
+        file_name = self.ins_filesystem.get_recent_file_name(
+            directory='oasis_dir',
+            file_group_name='interest_stock_',
+            len_now_time=12,
+            extension=extension
+        )
         wb = openpyxl.load_workbook('oasis_dir' + '/' + file_name + '.' + extension)
         sheet = wb.get_sheet_by_name('Sheet1')
 
@@ -507,17 +588,6 @@ class ETC:
         stock_list = candidate_stock_list
 
         return stock_code_list, stock_list
-
-    @staticmethod
-    def get_timestamp_to_datetime_date(timestamp):
-        """
-        :param timestamp:
-        :return: [datetime.date]
-        """
-
-        datetime_date = timestamp.date()
-
-        return datetime_date
 
     @staticmethod
     def get_trans_price(price):
@@ -586,8 +656,19 @@ class ETC:
 
         return trans_price
 
+    # @staticmethod
+    # def get_min_win_rate(profit_rate, fee):
+    #     x = Symbol('x')
+    #     y = x*(profit_rate-fee*(2+profit_rate)) - (100-x)*(profit_rate+(fee*(2+profit_rate)))
+    #     x_anw = solve(y)
+    #
+    #     min_win_rate = x_anw
+    #
+    #     return min_win_rate
+
     # 시간을 고려하지 않은 최악의 함수다.
-    # def get_minute_caled(self, min_init, min_variance):
+    # @staticmethod
+    # def get_minute_caled(min_init, min_variance):
     #     minute_cald = min_init + min_variance
     #     if 0 < minute_cald:
     #         minute_cald = minute_cald % 60
@@ -599,106 +680,67 @@ class ETC:
     #
     #     return minute_cald
 
-    # sys.path.extend(['/home/woong/20210205_project/20210205_code/20210821_insight/composition']) 경로추가
-    # os.chdir(r'C:\imjiwoong\20200331_with_python\20200331_oasis\20200704_alpha3\auto_trading')  ???
+    @staticmethod
+    def get_list_no_overlap(list_1, list_2, list_3):
+        # 각 리스트는 오름차순 정렬 되어 있음을 가정한다.
 
-    # @staticmethod
-    # def get_min_win_rate(profit_rate, fee):
-    #     x = Symbol('x')
-    #     y = x*(profit_rate-fee*(2+profit_rate)) - (100-x)*(profit_rate+(fee*(2+profit_rate)))
-    #     x_anw = solve(y)
-    #
-    #     min_win_rate = x_anw
-    #
-    #     return min_win_rate
+        list_1 = list(map(str, list_1))
+        list_2 = list(map(str, list_2))
+        list_3 = list(map(str, list_3))
 
-    def save_load(self):
-        # df
-        df = 0
-        # 중복 데이터 제거
-        df = df.drop_duplicates(['time'], keep='last')
+        list_list = [list_1, list_2, list_3]
 
-        # 일자 기준 오름차순으로 변경
-        df = df.sort_values(by='time')
+        dic_list = {}
+        id_list = 0
+        for i in list_list:
+            dic_list[id_list] = len(i)
+            id_list += 1
 
-        # index 가 0 부터 1씩 아래로 늘어나도록 수정
-        df = df.reset_index(drop=True)
+        sorted_values = sorted(dic_list.values())
+        count = 0
+        for i in sorted_values:
+            for key, value in dic_list.items():
+                if i == value and count == 0:
+                    c = list_list[key]
+                elif i == value and count == 1:
+                    b = list_list[key]
+                elif i == value and count == 2:
+                    a = list_list[key]
+            count += 1
 
-        # csv
-        df = 0
-        df = df.astype(str)
-        file_name = ''
-        now_time = ''
-        extension = ''
-        path_or_buf = '{}/{}_{}.csv'.format(self.ins_env_directory.log, file_name, now_time)
-        df.to_csv(path_or_buf=path_or_buf,
-                  index=True,
-                  index_label='index')
+        step2 = 0
+        f = []
+        x = 0
+        y = 0
+        z = 0
+        while z < len(c):
+            while y < len(b):
+                step2 += 1
+                if c[z] == b[y] == a[x]:
+                    f.append(c[z])
+                    x = x + 1
+                    y = y + 1
+                    z = z + 1
 
-        filepath_or_buffer = '{}/{}.{}'.format(self.ins_env_directory.binance, file_name, extension)
-        df = pandas.read_csv(filepath_or_buffer=filepath_or_buffer,
-                             header=0,
-                             index_col='index',
-                             dtype={
-                                 'minprice': str,
-                                 'minqty': str,
-                                 'minnotional': str
-                             },
-                             na_values='NaN',
-                             thousands=',')
+                elif c[z] != b[y] == a[x]:
+                    y = y + 1
+                    x = x + 1
 
-        # feather
-        df = df.astype(str)
-        file_name = 'log_trade'
-        path = './{}.ftr'.format(file_name)
-        df.to_feather(path=path)
+                elif c[z] == b[y] != a[x]:
+                    x = x + 1
 
-        file_name = 'log_trade'
-        path = './{}.ftr'.format(file_name)
-        df = pandas.read_feather(path=path, columns=None, use_threads=True, storage_options=None)
+                elif c[z] != b[y] != a[x]:
+                    y = y + 1
+                    x = x + 1
 
-        # npy
-        cleanup_data_std = 0
-        arr = numpy.array(cleanup_data_std)
-        file_name = 'cleanup_data_std'
-        extension = 'npy'
-        file = '{}/{}.{}'.format(self.ins_env_directory.feed, file_name, extension)
-        numpy.save(file=file, arr=arr)
+            x = 0
+            y = 0
+            z = z + 1
 
-        file_name = 'input_of_shell'
-        extension = 'npy'
-        file = '{}/{}.{}'.format(self.ins_env_directory.feed, file_name, extension)
-        input_of_shell = numpy.load(file=file)
+        return f
 
-
-class TimeKJW:
-    def __init__(self):
-        pass
-        # etc.
-        # tt = time.time()
-        # tm = datetime.datetime.fromtimestamp(tt)
-        # time_min = datetime.datetime.now().minute
-
-    def Contorol(self):
-        tm = 1234567890
-        tm = datetime.datetime.fromtimestamp(tm)
-        t2 = tm.replace(minute=00)
-        t2 = int(time.mktime(t2.timetuple()))
-
-        tm = time.localtime(tm)
-        time_minute = tm.tm_min
-
-    def get_str_date_from_timestemp_sec(self, timestemp_sec):
-        timestemp_sec = float(timestemp_sec)
-
-        str_date = ""
-
-        date = datetime.datetime.fromtimestamp(timestemp_sec)
-        str_date = date.strftime('%Y-%m-%d %H:%M:%S')
-
-        return str_date
-
-    def get_reverse_dic(self, dic):
+    @staticmethod
+    def get_reverse_dic(dic):
         reverse_dic = {}
         for key, value in dic.items():
             reverse_dic[value] = key
@@ -706,42 +748,81 @@ class TimeKJW:
         return reverse_dic
 
 
-class NpEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, numpy.integer):
-            return int(obj)
-        if isinstance(obj, numpy.floating):
-            return float(obj)
-        if isinstance(obj, numpy.ndarray):
-            return obj.tolist()
-        return json.JSONEncoder.default(self, obj)
+# str ###############################################################################################
+# str.strip()  # 공백 및 \n 제거.
 
 
-# class DF:
-#     def __init__(self):
-#         # price is column
-#         index_max = price.idxmax()
-#         self.term_high_price = price.loc[index_max]
+# list ###############################################################################################
+# list 문자열 "[1, 2, 3]"을 list 자체로 가져오기 ast.literal_eval("[1, 2, 3]") --> [1, 2, 3]  # 20220531
+# result = eval(text1) str => list  # 20240217
 
-# 대규모로 특정 값 갇는 df 찾을
-# id_lab_button = self.df_lab_button["id"].values
-# list_id_lab_button = id_lab_button.tolist()
-# list_id_lab_button = list(map(str, list_id_lab_button))
-# df_lab_button_image = df_lab_button_image[df_lab_button_image["id_lab_{}".format(self.category)].apply(str).isin(list_id_lab_button)]
-# df_lab_button_image = df_lab_button_image.sort_values(by='id', ascending=True, axis=0)
-# df_lab_button_image = df_lab_button_image.reset_index(drop=True)
 
-# 중복 행 인덱스 가져오기
-# overlap = db_bbox.duplicated([column_id_check, 'x', 'y', 'width'], keep='last')
-# index_overlap = overlap[overlap == True].index
+# dic ###############################################################################################
+# 새로운 key, value 추가.
+# samples = {}
+# target = 3
+# feature = numpy.array([1, 2, 3, 4])
+# samples.setdefault(target, []).append(feature) --> samples[3] = [feature]  # 동일한 효과.
 
-# Create folder때
+
+# map ###############################################################################################
+# list_id_lab_button = list(map(str, list_id_lab_button))  # data type 변경.
+
+
+# sys ###############################################################################################
+# sys.path.extend(['/test/test']) 경로추가.
+
+
+# os
+# os.chdir('/test/test') working directory 변경.
+
+# Create folder
 # dir_save = self.ins_env_directory.table
 # if os.path.exists(dir_save):
 #     pass
 # else:
 #     os.mkdir(dir_save)
 
+
+# pandas.DataFrame ###############################################################################################
+# df = df.drop_duplicates(['time'], keep='last')  # 중복 데이터 제거
+# df = df.sort_values(by='time')  # 일자 기준 오름차순으로 변경
+# index_max = price.idxmax()
+# high_price = price.loc[index_max]
+# df['open_time'] = pandas.to_datetime(df['open_time'], unit='ms')  # 시간 변환.
+# df = df.set_index('open_time', inplace=False)  # index 변경.
+# df_lab_button_image = df_lab_button_image.sort_values(by='id', ascending=True, axis=0)  # 특정 열 기준 정렬.
+# df_lab_button_image = df_lab_button_image.reset_index(drop=True)  # index 초기화.
+
+# 특정 리스트에 있는 값이 있는 행만 선택.
+# id_lab_button = self.df_lab_button["id"].values
+# list_id_lab_button = id_lab_button.tolist()
+# df_lab_button_image = df_lab_button_image[df_lab_button_image["id_lab_{}".format(self.category)].apply(str).isin(list_id_lab_button)]
+
+# 중복 행 인덱스 가져오기
+# overlap = db_bbox.duplicated([column_id_check, 'x', 'y', 'width'], keep='last')
+# index_overlap = overlap[overlap == True].index
+
+
+# .txt ###############################################################################################
+# write
+# items = map(str, [class_index, x_center, y_center, x_width, y_height])
+# line = ' '.join(items)
+# file_name, _ = os.path.splitext(image)
+# file = "{}.txt".format(file_name)
+# path_file = os.path.join(self.ins_env_pathdirectory.output_label, file)
+# with open(path_file, 'w') as f:
+#   f.write("{}\n".format(line))
+
+# read
+# with open(file, "r") as f:
+#     for row in f:
+#         row = row.strip()
+#         list_data = row.split(" ")
+#         x, y, width, height = list_data[1], list_data[2], list_data[3], list_data[4]
+
+
+# HTML ###############################################################################################
 # Download image
 # a, b = URL[-5:].split('.')
 # file_name = '{}_{}.{}'.format(port_image, id_check, b)
@@ -754,11 +835,6 @@ class NpEncoder(json.JSONEncoder):
 #
 #     urllib.request.urlretrieve(URL, path_file)
 #     time.sleep(0.2)
-
-
-## str
-# 공백 및 \n 제거.
-# str.strip()
 
 
 if __name__ == '__main__':

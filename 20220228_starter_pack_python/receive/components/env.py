@@ -14,7 +14,7 @@ class Path:
 
 
 class PathDirectory(Path):
-    project_output = r'/20200619_research_data/20220126_galaxy'
+    project_output = '/test'
 
 
 class PathFile(Path):
