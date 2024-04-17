@@ -812,6 +812,16 @@ class ETC:
 # overlap = db_bbox.duplicated([column_id_check, 'x', 'y', 'width'], keep='last')
 # index_overlap = overlap[overlap == True].index
 
+# 각 컬럼 값들에 대해 모든 경우의 수에 해당하는 df_split 만들기, len(dic_df) == 모든 경우의 수.
+# dic_df = dict(list(df.groupby(
+#     [
+#         "col_1",
+#         "col_2",
+#         "col_3",
+#         "col_4",
+#     ]
+# )))
+
 
 # .txt ###############################################################################################
 # write
