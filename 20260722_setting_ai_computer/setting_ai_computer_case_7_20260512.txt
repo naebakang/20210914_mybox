@@ -1,0 +1,70 @@
+setting_ai_computer_case
+first, 20260512
+last, 20260512
+
+
+
+# OS
+# Ubuntu 22.04.5 LTS, 64-bit
+
+# CPU
+# In terminal
+lscpu
+# Intel(R) Core(TM) Ultra 7 270K Plus
+
+# RAM
+# In terminal
+free -h
+# 62GB
+
+# Storage
+# In terminal
+lsblk
+# SSD, 915.5GB
+
+# GPU
+# In terminal
+sudo apt-get install nvidia-driver-580-open
+reboot
+nvidia-smi
+# Driver Version: 580.142
+# NVIDIA GeForce RTX 5060 Ti
+
+
+# CUDA 12.4.0 (March 2024)
+# In terminal
+wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda_12.4.0_550.54.14_linux.run
+sudo sh cuda_12.4.0_550.54.14_linux.run
+# in install
+# Abort/Continue -> Continue
+# accept/decline/quit -> accept
+# [ ] Driver
+#     [ ] 550.54.14
+# install
+
+# In terminal
+sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-12.4/bin' >> /etc/profile"
+sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.4/lib64' >> /etc/profile"
+sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-12.4' >> /etc/profile"
+source /etc/profile
+nvcc --version
+reboot
+nvcc --version
+
+
+# cudnn v9.5.0 (October 2024)
+# In terminal
+wget https://developer.download.nvidia.com/compute/cudnn/9.5.0/local_installers/cudnn-local-repo-ubuntu2204-9.5.0_1.0-1_amd64.deb
+sudo dpkg -i cudnn-local-repo-ubuntu2204-9.5.0_1.0-1_amd64.deb
+sudo cp /var/cudnn-local-repo-ubuntu2204-9.5.0/cudnn-*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+sudo apt-get -y install cudnn-cuda-12
+dpkg -l | grep cudnn
+reboot
+dpkg -l | grep cudnn
+
+
+
+end.
+
+

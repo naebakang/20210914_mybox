@@ -1,0 +1,48 @@
+setting_ai_computer_case_4_20230406
+first, 20230406
+last, 20230407
+
+
+
+CPU, intel core i5-13400F
+RAM, 32GB
+GPU, GeForce RTX 3060
+SSD, 500GB
+HDD, 2TB
+
+
+OS
+Ubuntu 20.04.3 LTS, 64-bit
+
+
+# Nvidia driver 525
+sudo apt-get install nvidia-driver-525
+reboot
+nvidia-smi
+
+
+# CUDA 11.2.0
+wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+sudo sh cuda_11.2.0_460.27.04_linux.run
+# in install
+# Abort/Continue -> Continue
+# accept/decline/quit -> accept
+# [ ] Driver
+     [ ] 460.60.13
+# install
+
+sh -c "echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> /etc/profile"
+sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.2/lib64' >> /etc/profile"
+sh -c "echo 'export CUDADIR=/usr/local/cuda-11.2' >> /etc/profile"
+source /etc/profile
+nvcc --version
+
+
+# cudnn v8.1.0
+tar xvzf cudnn-11.2-linux-x64-v8.1.0.77.tgz
+cd cuda
+sudo cp ./include/cudnn*.h /usr/local/cuda-11.2/include
+sudo cp -P ./lib/libcudnn* /usr/local/cuda-11.2/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda-11.2/lib64/libcudnn*
+
+

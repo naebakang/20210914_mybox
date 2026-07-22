@@ -1,0 +1,50 @@
+setting_ai_computer_case_5_20240411
+first, 20240411
+last, 20240411
+
+
+
+CPU, intel core i9-9900K
+RAM, 8GB x2 (16GB)
+GPU, GeForce RTX 2080 Ti
+SSD, 932GB
+
+
+OS
+Ubuntu 20.04.6 LTS, 64-bit
+
+
+# Nvidia driver 525
+sudo apt-get install nvidia-driver-525
+reboot
+nvidia-smi
+
+
+# CUDA 11.2.0
+wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+sudo sh cuda_11.2.0_460.27.04_linux.run
+# in install
+# Abort/Continue -> Continue
+# accept/decline/quit -> accept
+# [ ] Driver
+     [ ] 460.60.13
+# install
+
+sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-11.2/bin' >> /etc/profile"
+sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.2/lib64' >> /etc/profile"
+sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-11.2' >> /etc/profile"
+source /etc/profile
+nvcc --version
+reboot
+nvcc --version
+
+
+# cudnn v8.1.0
+tar xvzf cudnn-11.2-linux-x64-v8.1.0.77.tgz
+cd cuda
+sudo cp ./include/cudnn*.h /usr/local/cuda-11.2/include
+sudo cp -P ./lib64/libcudnn* /usr/local/cuda-11.2/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda-11.2/lib64/libcudnn*
+reboot
+cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+

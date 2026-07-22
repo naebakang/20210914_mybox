@@ -1,0 +1,48 @@
+usefull commender ubuntu
+# first, 20210914
+# last, 20260722
+# editor, naebakang
+
+
+
+# remote
+ssh abcd@124.157.1.99 -p 50022
+scp -P 50022 ./test.txt abcd@124.157.1.99:~
+
+# set grub
+# 20260722
+sudo vim /etc/default/grub
+# In vim
+GRUB_TIMEOUT_STYLE=menu
+GRUB_TIMEOUT=5
+# In terminal
+sudo update-grub
+
+# 20210408
+sudo gedit /etc/default/grub
+sudo gedit /boot/grub/grub.cfg
+sudo update-grub
+
+# add persistent environment variables
+~/.pam_environment
+EX=example
+
+~/.profile
+export EX=example
+
+# handle tar
+# press
+tar -cvf name.tar ./name_folder
+
+# unpress
+tar -xvf name.tar
+
+# list folder, file
+ls -la
+
+
+
+end.
+
+
+
