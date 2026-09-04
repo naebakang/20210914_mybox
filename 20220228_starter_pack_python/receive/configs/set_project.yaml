@@ -1,0 +1,27 @@
+# Set project
+
+# 프로젝트가 pyinstaller 를 통해 설치 파일로 만들어지면, env.py 를 수정 할 수가 없다.
+# env.py 값 중에 프로젝트가 설치 파일임에도 수정 할 수 있게 하고 싶은 값을
+# env.py 대신 여기에 기록한다.
+# 또한, 이미 실행되고 있는 코드에 실시간으로 변경된 값을 주고자 할 때 여기에 기록한다.
+# 여기에 최대한 변수가 적을 수록 좋다, 추적이 보다 어렵기 때문.
+
+# 20260128, 변경, 여기를 주 config 설정 파일로 하고 env.py 를 보조 설정 파일로 한다.
+# 코드와 설정의 경계를 조금 더 명확하게 하고자 한다.
+
+name:
+  version: '20260127_v001'
+
+path_directory:
+  project: '/home/ubuntu_user_1/20200331_code/test'
+  data: '/home/ubuntu_user_1/20200619_research_data/test'
+
+path_file:
+  a: ''
+
+index_kjw:
+  a: 5
+
+have_unit:
+  cycle_cooldown: 45  # [s], 가장 작은 정보 단위가 60s 이기 때문에 60s 보다 작아야 한다.
+

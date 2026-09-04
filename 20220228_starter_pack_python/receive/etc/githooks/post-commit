@@ -1,0 +1,13 @@
+#!/bin/bash
+# pre-commit이 올려둔 set_project.yaml의 버전과 동일한 이름으로 방금 만들어진 커밋에 태그를 남긴다.
+set -e
+
+FILE="set_project.yaml"
+VERSION=$(grep -oP "(?<=version: ')[^']+" "$FILE")
+
+if git rev-parse "$VERSION" >/dev/null 2>&1; then
+    echo "[post-commit] 태그 $VERSION 이 이미 존재해서 건너뜀"
+else
+    git tag "$VERSION"
+    echo "[post-commit] 태그 생성: $VERSION"
+fi

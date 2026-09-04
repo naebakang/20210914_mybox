@@ -1,0 +1,25 @@
+#!/bin/bash
+# set_project.yaml의 name.version(형식: YYYYMMDD_vNNN)을 매 커밋마다 자동으로 올린다.
+# 카운터(NNN)는 날짜가 바뀌면 001로 리셋되고, 같은 날 안에서는 커밋할 때마다 1씩 증가한다.
+set -e
+
+FILE="set_project.yaml"
+
+CURRENT=$(grep -oP "(?<=version: ')[^']+" "$FILE")
+CURRENT_DATE=$(echo "$CURRENT" | grep -oP '^[0-9]{8}')
+CURRENT_COUNTER=$(echo "$CURRENT" | grep -oP '(?<=_v)[0-9]+')
+TODAY=$(date +%Y%m%d)
+
+if [ "$CURRENT_DATE" == "$TODAY" ]; then
+    # 10# 접두어로 8진수 오인(예: 008)을 방지하고 항상 10진수로 계산
+    NEXT_COUNTER=$((10#$CURRENT_COUNTER + 1))
+else
+    NEXT_COUNTER=1
+fi
+
+NEXT_VERSION=$(printf "%s_v%03d" "$TODAY" "$NEXT_COUNTER")
+
+sed -i "s/version: '.*'/version: '$NEXT_VERSION'/" "$FILE"
+git add "$FILE"
+
+echo "[pre-commit] 버전 갱신: $CURRENT -> $NEXT_VERSION"

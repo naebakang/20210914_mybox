@@ -4,9 +4,9 @@
 Description
 """
 
-from components.function.base import Memory, ETC
+from src.app.function.base import Memory, ETC
 
-from components.env import Name, PathDirectory, PathFile, IndexKJW, HaveUnit
+from configs.env import Name, PathDirectory, PathFile, IndexKJW, HaveUnit
 
 
 class Temp:
@@ -23,3 +23,4 @@ class Temp:
 
 if __name__ == "__main__":
     ins = Temp()
+

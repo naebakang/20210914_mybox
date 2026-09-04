@@ -1,34 +1,17 @@
-# File encoding: utf8
+# This is a sample Python script.
 
-"""
-20220320_v001, 최초생성
-"""
-
-from components.procedure.once import Sprinter
-from components.procedure.cycle import Cyclist
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-class App:
-    def __init__(self):
-        self.ins_sprinter = Sprinter()
-        self.ins_cyclist = Cyclist()
-
-    def run(self):
-        print('-----Start App-----')
-        self.ins_sprinter.run()
-        while 1:
-            print('')
-            self.ins_cyclist.run()
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
+# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    import sys
-    import os
+    print_hi('PyCharm')
 
-    working_dir = ""
-    sys.path.append(working_dir)
-    os.chdir(working_dir)
-    print(os.getcwd())
-    
-    ins = App()
-    ins.run()
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
